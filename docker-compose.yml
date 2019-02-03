@@ -1,0 +1,39 @@
+version: '2'
+services:
+    nginx:
+        container_name: DOCKER_TEST_NGINX
+        build: ./nginx
+        restart: always
+        ports:
+            - "8085:8081"
+            - "8086:8081"
+            - "8087:8081"
+            #- "8001:8080"
+            - "8000:8000"
+        links:
+            - fpm
+        volumes:
+            - "./public_html:/public_html"
+
+    apache:
+        container_name: DOCKER_TEST_APACHE
+        build: ./apache
+        restart: always
+        ports:
+            - "8080:80"
+            - "8001:80"
+        links:
+            - fpm
+        volumes:
+            - "./public_html:/usr/local/apache2/htdocs"        
+
+    fpm:
+        image: php:fpm
+        ports:
+            - "9000:9000"
+
+        # seems like fpm receives the full path from nginx
+        # and tries to find the files in this dock, so it must
+        # be the same as nginx.root
+        volumes:
+            - ./public_html:/public_html

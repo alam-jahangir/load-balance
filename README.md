@@ -5,9 +5,14 @@
 3. PHP
 4. DOCKER
 5. DOCKER-COMPOSE
+```
 
 ### COMMAND
+
+``` cmd
 -- docker-compose build
 --  docker-compose up --build
 -- docker-compose up
 -- docker-compose down 
+
+```
